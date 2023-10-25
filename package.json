@@ -9,7 +9,7 @@
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx app",
-    "format": "prettier --write app/**/*.{js,jsx,ts,tsx}",
+    "format": "prettier --write 'app/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx app && bun run format"
   },
   "dependencies": {
@@ -20,6 +20,8 @@
     "@remix-run/serve": "^2.1.0",
     "framer-motion": "^10.16.4",
     "isbot": "^3.6.8",
+    "lucide-react": "^0.288.0",
+    "next-themes": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

@@ -1,6 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
 
-import { Header } from "~/components/Header/header";
+import { Header } from "~/components/ui/Header/header";
 
 export const meta: MetaFunction = () => {
   return [
