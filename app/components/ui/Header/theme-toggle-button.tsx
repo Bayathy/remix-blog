@@ -1,8 +1,10 @@
+import { memo } from "react";
+
+import { Icon } from "@iconify/react";
 import { Button } from "@nextui-org/react";
-import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 
-export const ThemeToggleButton = () => {
+export const ThemeToggleButton = memo(() => {
   const { theme, setTheme } = useTheme();
   return (
     <Button
@@ -12,7 +14,11 @@ export const ThemeToggleButton = () => {
       color="primary"
       variant="flat"
     >
-      {theme === "light" ? <SunIcon /> : <MoonIcon />}
+      {theme === "light" ? (
+        <Icon icon={"tabler:sun-high"} width={32} height={32} />
+      ) : (
+        <Icon icon={"tabler:moon"} width={32} height={32} />
+      )}
     </Button>
   );
-};
+});
