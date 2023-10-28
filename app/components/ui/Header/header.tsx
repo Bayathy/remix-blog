@@ -13,7 +13,7 @@ import { ThemeProvider } from "~/components/ux/theme-provider";
 
 export const Header = memo(() => {
   return (
-    <Navbar position="static">
+    <Navbar position="static" maxWidth="xl">
       <NavbarBrand className="w-full">
         <h1 className="text-3xl">Bayathy Blog</h1>
       </NavbarBrand>

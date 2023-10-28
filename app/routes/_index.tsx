@@ -1,17 +1,9 @@
-import { Icon } from "@iconify/react";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Divider,
-  Image,
-  Link,
-} from "@nextui-org/react";
+import { Image } from "@nextui-org/react";
 
 import type { MetaFunction } from "@remix-run/node";
 
 import { Header } from "~/components/ui/Header/header";
+import { PostCard } from "~/components/ui/PostCard/post-card";
 
 export const meta: MetaFunction = () => {
   return [
@@ -24,32 +16,23 @@ export default function Index() {
   return (
     <>
       <Header />
-      <main className="mx-auto mt-4 max-w-5xl px-6">
-        <Card>
-          <CardHeader>
-            <h2 className="text-3xl">About Me</h2>
-          </CardHeader>
-          <Divider />
-          <CardBody>
-            <div className="flex items-center justify-around">
-              <div>
-                <p className="text-xl">Hello. My name is Keito Kobayashi.</p>
-              </div>
-              <div>
-                <Image width={240} className="rounded-full" src="/icon.JPG" />
-              </div>
-            </div>
-          </CardBody>
-          <Divider />
-          <CardFooter className="flex justify-end gap-4 px-4">
-            <Link href="/blog" as={Link}>
-              <Icon icon="tabler:brand-github-filled" width={32} height={32} />
-            </Link>
-            <Link href="/blog" as={Link}>
-              <Icon icon="tabler:brand-twitter-filled" width={32} height={32} />
-            </Link>
-          </CardFooter>
-        </Card>
+      <main className="mx-auto mt-4 flex max-w-6xl flex-col gap-8 px-6">
+        <section>
+          <h2 className="text-3xl font-bold">About Me</h2>
+          <div className="mt-4 grid place-items-center gap-4 md:grid-flow-col">
+            <p className="text-large">My name is Keito Kobaayshi.</p>
+            <Image width={240} src="/icon.JPG" radius="full" />
+          </div>
+        </section>
+        <section>
+          <h2 className="text-3xl font-bold">Blog Posts</h2>
+          <ol className="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2">
+            <PostCard />
+            <PostCard />
+            <PostCard />
+            <PostCard />
+          </ol>
+        </section>
       </main>
     </>
   );
