@@ -1,9 +1,15 @@
-import { Image } from "@nextui-org/react";
+import {
+  Accordion,
+  AccordionItem,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Chip,
+  Image,
+} from "@nextui-org/react";
 
 import type { MetaFunction } from "@remix-run/node";
-
-import { Header } from "~/components/ui/Header/header";
-import { PostCard } from "~/components/ui/PostCard/post-card";
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,23 +21,74 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <>
-      <Header />
       <main className="mx-auto mt-4 flex max-w-6xl flex-col gap-8 px-6">
         <section>
-          <h2 className="text-3xl font-bold">About Me</h2>
           <div className="mt-4 grid place-items-center gap-4 md:grid-flow-col">
             <p className="text-large">My name is Keito Kobaayshi.</p>
             <Image width={240} src="/icon.JPG" radius="full" />
           </div>
         </section>
-        <section>
-          <h2 className="text-3xl font-bold">Blog Posts</h2>
-          <ol className="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2">
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-          </ol>
+        <section className="mx-auto grid grid-cols-1 place-items-center gap-4 md:grid-cols-2">
+          <div className="max-w-md">
+            <Card>
+              <CardHeader className="flex-col items-start px-4 pb-0 pt-2">
+                <h3 className="text-xl font-bold">Front-End</h3>
+              </CardHeader>
+              <CardBody className="pt-2">
+                <p>Reactをメインで使っています。UX面に興味があります。</p>
+              </CardBody>
+              <CardFooter>
+                <Accordion isCompact>
+                  <AccordionItem title="経験のある技術">
+                    <div className="flex flex-wrap gap-2">
+                      <Chip color="secondary">React</Chip>
+                      <Chip color="secondary">Next.js</Chip>
+                    </div>
+                  </AccordionItem>
+                </Accordion>
+              </CardFooter>
+            </Card>
+          </div>
+          <div className="max-w-md">
+            <Card>
+              <CardHeader className="flex-col items-start px-4 pb-0 pt-2">
+                <h3 className="text-xl font-bold">Back-End</h3>
+              </CardHeader>
+              <CardBody className="pt-2">
+                <p>Node.jsをメインで使っています。API設計に興味があります。</p>
+              </CardBody>
+              <CardFooter>
+                <Accordion isCompact>
+                  <AccordionItem title="経験のある技術">
+                    <div className="flex flex-wrap gap-2">
+                      <Chip color="secondary">Node.js</Chip>
+                      <Chip color="secondary">Express</Chip>
+                    </div>
+                  </AccordionItem>
+                </Accordion>
+              </CardFooter>
+            </Card>
+          </div>
+          <div className="max-w-md">
+            <Card>
+              <CardHeader className="flex-col items-start px-4 pb-0 pt-2">
+                <h3 className="text-xl font-bold">Back-End</h3>
+              </CardHeader>
+              <CardBody className="pt-2">
+                <p>Node.jsをメインで使っています。API設計に興味があります。</p>
+              </CardBody>
+              <CardFooter>
+                <Accordion isCompact>
+                  <AccordionItem title="経験のある技術">
+                    <div className="flex flex-wrap gap-2">
+                      <Chip color="secondary">Node.js</Chip>
+                      <Chip color="secondary">Express</Chip>
+                    </div>
+                  </AccordionItem>
+                </Accordion>
+              </CardFooter>
+            </Card>
+          </div>
         </section>
       </main>
     </>
