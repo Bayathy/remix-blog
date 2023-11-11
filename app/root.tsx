@@ -8,6 +8,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+import { Footer } from "./components/ui/Footer/footer";
 import { Header } from "./components/ui/Header/header";
 import stylesheet from "./tailwind.css";
 
@@ -30,6 +31,7 @@ export default function App() {
         <NextUIProvider>
           <Header />
           <Outlet />
+          <Footer />
           <ScrollRestoration />
           <Scripts />
           <LiveReload />

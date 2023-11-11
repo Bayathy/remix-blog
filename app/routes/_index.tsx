@@ -31,7 +31,7 @@ export default function Index() {
         <section className="mx-auto grid grid-cols-1 place-items-center gap-4 md:grid-cols-2">
           <div className="max-w-md">
             <Card>
-              <CardHeader className="flex-col items-start px-4 pb-0 pt-2">
+              <CardHeader className="flex-col items-start px-4 pb-0 pt-4">
                 <h3 className="text-xl font-bold">Front-End</h3>
               </CardHeader>
               <CardBody className="pt-2">
@@ -51,7 +51,7 @@ export default function Index() {
           </div>
           <div className="max-w-md">
             <Card>
-              <CardHeader className="flex-col items-start px-4 pb-0 pt-2">
+              <CardHeader className="flex-col items-start px-4 pb-0 pt-4">
                 <h3 className="text-xl font-bold">Back-End</h3>
               </CardHeader>
               <CardBody className="pt-2">
@@ -71,7 +71,7 @@ export default function Index() {
           </div>
           <div className="max-w-md">
             <Card>
-              <CardHeader className="flex-col items-start px-4 pb-0 pt-2">
+              <CardHeader className="flex-col items-start px-4 pb-0 pt-4">
                 <h3 className="text-xl font-bold">Back-End</h3>
               </CardHeader>
               <CardBody className="pt-2">
