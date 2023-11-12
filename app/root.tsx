@@ -27,11 +27,13 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <NextUIProvider>
-          <Header />
-          <Outlet />
-          <Footer />
+          <div className="grid min-h-screen w-screen grid-cols-[1fr] grid-rows-[auto_1fr_auto] overflow-hidden">
+            <Header />
+            <Outlet />
+            <Footer />
+          </div>
           <ScrollRestoration />
           <Scripts />
           <LiveReload />

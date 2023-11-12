@@ -28,7 +28,7 @@ export default function Index() {
             <Image width={240} src="/icon.JPG" radius="full" />
           </div>
         </section>
-        <section className="mx-auto grid grid-cols-1 place-items-center gap-4 md:grid-cols-2">
+        <section className="mx-auto grid grid-cols-1 place-items-start gap-4 md:grid-cols-2">
           <div className="max-w-md">
             <Card>
               <CardHeader className="flex-col items-start px-4 pb-0 pt-4">

@@ -12,7 +12,7 @@ export const ThemeToggleButton = memo(() => {
       isIconOnly
       aria-label="Toggle theme"
       color="primary"
-      variant="flat"
+      variant="light"
     >
       {theme === "light" ? (
         <Icon icon={"tabler:sun-high"} width={32} height={32} />
