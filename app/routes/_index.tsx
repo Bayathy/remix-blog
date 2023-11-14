@@ -11,6 +11,8 @@ import {
 
 import type { MetaFunction } from "@remix-run/node";
 
+import { SkillCard } from "~/components/ui/SkillCard";
+
 export const meta: MetaFunction = () => {
   return [
     { title: "New Remix App" },
@@ -30,24 +32,7 @@ export default function Index() {
         </section>
         <section className="mx-auto grid grid-cols-1 place-items-start gap-4 md:grid-cols-2">
           <div className="max-w-md">
-            <Card>
-              <CardHeader className="flex-col items-start px-4 pb-0 pt-4">
-                <h3 className="text-xl font-bold">Front-End</h3>
-              </CardHeader>
-              <CardBody className="pt-2">
-                <p>Reactをメインで使っています。UX面に興味があります。</p>
-              </CardBody>
-              <CardFooter>
-                <Accordion isCompact>
-                  <AccordionItem title="経験のある技術">
-                    <div className="flex flex-wrap gap-2">
-                      <Chip color="secondary">React</Chip>
-                      <Chip color="secondary">Next.js</Chip>
-                    </div>
-                  </AccordionItem>
-                </Accordion>
-              </CardFooter>
-            </Card>
+            <SkillCard />
           </div>
           <div className="max-w-md">
             <Card>

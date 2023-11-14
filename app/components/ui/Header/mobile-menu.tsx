@@ -1,19 +1,18 @@
 import { memo } from "react";
 
-import { NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
-import { Link } from "@remix-run/react";
+import { Link, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
 
 export const MobileMenu = memo(() => {
   return (
     <NavbarMenu>
       <NavbarMenuItem>
-        <Link to={"/home"}>Home</Link>
+        <Link href={"/"}>Home</Link>
       </NavbarMenuItem>
       <NavbarMenuItem>
-        <Link to={"/blog"}>Blog</Link>
+        <Link href={"/works"}>Works</Link>
       </NavbarMenuItem>
       <NavbarMenuItem>
-        <Link to={"/other"}>Other</Link>
+        <Link href={"/blog"}>Blog</Link>
       </NavbarMenuItem>
     </NavbarMenu>
   );
