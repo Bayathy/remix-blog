@@ -6,6 +6,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigate,
 } from "@remix-run/react";
 
 import { Footer } from "./components/ui/Footer/footer";
@@ -19,6 +20,7 @@ export const links: LinksFunction = () => [
 ];
 
 export default function App() {
+  const navigate = useNavigate();
   return (
     <html lang="ja" suppressHydrationWarning>
       <head>
@@ -28,7 +30,7 @@ export default function App() {
         <Links />
       </head>
       <body suppressHydrationWarning>
-        <NextUIProvider>
+        <NextUIProvider navigate={navigate}>
           <div className="grid min-h-screen w-screen grid-cols-[1fr] grid-rows-[auto_1fr_auto] overflow-hidden">
             <Header />
             <Outlet />

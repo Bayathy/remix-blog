@@ -10,7 +10,6 @@ import {
   NavbarItem,
   NavbarMenuToggle,
 } from "@nextui-org/react";
-import { Link as RemixLink } from "@remix-run/react";
 
 import { MobileMenu } from "./mobile-menu";
 import { ThemeToggleButton } from "./theme-toggle-button";
@@ -30,21 +29,15 @@ export const Header = memo(() => {
       <NavbarBrand className="w-full">
         <h1 className="text-large md:text-3xl">Bayathy Blog</h1>
       </NavbarBrand>
-      <NavbarContent justify="end" className="hidden md:flex">
+      <NavbarContent justify="center" className="hidden md:flex">
         <NavbarItem>
-          <Link as={RemixLink} to={"/"}>
-            Home
-          </Link>
+          <Link href={"/"}>Home</Link>
         </NavbarItem>
         <NavbarItem>
-          <Link as={RemixLink} to={"/works"}>
-            Works
-          </Link>
+          <Link href={"/works"}>Works</Link>
         </NavbarItem>
         <NavbarItem>
-          <Link as={RemixLink} to={"/blog"}>
-            Blog
-          </Link>
+          <Link href={"/blog"}>Blog</Link>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
