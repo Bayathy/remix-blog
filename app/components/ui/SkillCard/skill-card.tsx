@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import {
   Card,
   CardHeader,
@@ -8,25 +10,34 @@ import {
   Chip,
 } from "@nextui-org/react";
 
-export const SkillCard = () => {
+type SkillCardProps = {
+  title: string;
+  text: string;
+  stack: string[];
+};
+
+export const SkillCard = memo<SkillCardProps>(({ title, text, stack }) => {
   return (
     <Card>
       <CardHeader className="flex-col items-start px-4 pb-0 pt-4">
-        <h3 className="text-xl font-bold">Front-End</h3>
+        <h3 className="text-xl font-bold">{title}</h3>
       </CardHeader>
       <CardBody className="pt-2">
-        <p>Reactをメインで使っています。UX面に興味があります。</p>
+        <p>{text}</p>
       </CardBody>
       <CardFooter>
         <Accordion isCompact>
           <AccordionItem title="経験のある技術">
             <div className="flex flex-wrap gap-2">
-              <Chip color="secondary">React</Chip>
-              <Chip color="secondary">Next.js</Chip>
+              {stack.map((item) => (
+                <Chip key={item} color="secondary">
+                  {item}
+                </Chip>
+              ))}
             </div>
           </AccordionItem>
         </Accordion>
       </CardFooter>
     </Card>
   );
-};
+});

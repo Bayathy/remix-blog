@@ -1,79 +1,50 @@
-import {
-  Accordion,
-  AccordionItem,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Chip,
-  Image,
-} from "@nextui-org/react";
-
-import type { MetaFunction } from "@remix-run/node";
+import { createDirectus, readItem, readItems, rest } from "@directus/sdk";
+import { Image } from "@nextui-org/react";
+import { json, type MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 
 import { SkillCard } from "~/components/ui/SkillCard";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "Bayathy | Home" },
+    { name: "description", content: "BayathyのPortfolioです。" },
   ];
 };
 
+export async function loader() {
+  const client = createDirectus(process.env.CMS_URL as string).with(rest());
+  const skills = await client.request(readItems("skills"));
+  const aboutMeRes = await client.request(readItem("aboutMe", 1));
+
+  const aboutMe = {
+    icon: `${process.env.SUPABASE_URL + aboutMeRes.icon}.png`,
+    text: aboutMeRes.text,
+  };
+
+  return json({ skills, aboutMe });
+}
 export default function Index() {
+  const data = useLoaderData<typeof loader>();
   return (
     <>
       <main className="mx-auto mt-4 flex max-w-6xl flex-col gap-8 px-6">
         <section>
           <div className="mt-4 grid place-items-center gap-4 md:grid-flow-col">
-            <p className="text-large">My name is Keito Kobaayshi.</p>
-            <Image width={240} src="/icon.JPG" radius="full" />
+            <p className="text-large">{data.aboutMe.text}</p>
+            <Image width={240} src={data.aboutMe.icon} radius="full" />
           </div>
         </section>
         <section className="mx-auto grid grid-cols-1 place-items-start gap-4 md:grid-cols-2">
-          <div className="max-w-md">
-            <SkillCard />
-          </div>
-          <div className="max-w-md">
-            <Card>
-              <CardHeader className="flex-col items-start px-4 pb-0 pt-4">
-                <h3 className="text-xl font-bold">Back-End</h3>
-              </CardHeader>
-              <CardBody className="pt-2">
-                <p>Node.jsをメインで使っています。API設計に興味があります。</p>
-              </CardBody>
-              <CardFooter>
-                <Accordion isCompact>
-                  <AccordionItem title="経験のある技術">
-                    <div className="flex flex-wrap gap-2">
-                      <Chip color="secondary">Node.js</Chip>
-                      <Chip color="secondary">Express</Chip>
-                    </div>
-                  </AccordionItem>
-                </Accordion>
-              </CardFooter>
-            </Card>
-          </div>
-          <div className="max-w-md">
-            <Card>
-              <CardHeader className="flex-col items-start px-4 pb-0 pt-4">
-                <h3 className="text-xl font-bold">Back-End</h3>
-              </CardHeader>
-              <CardBody className="pt-2">
-                <p>Node.jsをメインで使っています。API設計に興味があります。</p>
-              </CardBody>
-              <CardFooter>
-                <Accordion isCompact>
-                  <AccordionItem title="経験のある技術">
-                    <div className="flex flex-wrap gap-2">
-                      <Chip color="secondary">Node.js</Chip>
-                      <Chip color="secondary">Express</Chip>
-                    </div>
-                  </AccordionItem>
-                </Accordion>
-              </CardFooter>
-            </Card>
-          </div>
+          {data.skills.map((skill) => (
+            <div className="max-w-md" key={skill.id}>
+              <SkillCard
+                text={skill.text}
+                title={skill.title}
+                stack={skill.skillTags}
+              />
+            </div>
+          ))}
         </section>
       </main>
     </>
