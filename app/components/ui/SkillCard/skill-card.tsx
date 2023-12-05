@@ -1,4 +1,4 @@
-import { memo } from "react";
+import type { FC } from "react";
 
 import {
   Card,
@@ -16,9 +16,9 @@ type SkillCardProps = {
   stack: string[];
 };
 
-export const SkillCard = memo<SkillCardProps>(({ title, text, stack }) => {
+export const SkillCard: FC<SkillCardProps> = ({ title, text, stack }) => {
   return (
-    <Card>
+    <Card className="min-w-[320px]">
       <CardHeader className="flex-col items-start px-4 pb-0 pt-4">
         <h3 className="text-xl font-bold">{title}</h3>
       </CardHeader>
@@ -40,4 +40,4 @@ export const SkillCard = memo<SkillCardProps>(({ title, text, stack }) => {
       </CardFooter>
     </Card>
   );
-});
+};

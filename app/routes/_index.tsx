@@ -22,21 +22,22 @@ export async function loader() {
     text: aboutMeRes.text,
   };
 
-  return json({ skills, aboutMe });
+  return json({ aboutMe, skills });
 }
 export default function Index() {
-  const data = useLoaderData<typeof loader>();
+  const { skills, aboutMe } = useLoaderData<typeof loader>();
+
   return (
     <>
       <main className="mx-auto mt-4 flex max-w-6xl flex-col gap-8 px-6">
         <section>
           <div className="mt-4 grid place-items-center gap-4 md:grid-flow-col">
-            <p className="text-large">{data.aboutMe.text}</p>
-            <Image width={240} src={data.aboutMe.icon} radius="full" />
+            <p className="text-large">{aboutMe.text}</p>
+            <Image width={240} src={aboutMe.icon} radius="full" />
           </div>
         </section>
         <section className="mx-auto grid grid-cols-1 place-items-start gap-4 md:grid-cols-2">
-          {data.skills.map((skill) => (
+          {skills.map((skill) => (
             <div className="max-w-md" key={skill.id}>
               <SkillCard
                 text={skill.text}
