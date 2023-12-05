@@ -33,7 +33,7 @@ export default function Index() {
         <section>
           <div className="mt-4 grid place-items-center gap-4 md:grid-flow-col">
             <p className="text-large">{aboutMe.text}</p>
-            <Image width={240} src={aboutMe.icon} radius="full" />
+            <Image width={240} height={240} src={aboutMe.icon} radius="full" />
           </div>
         </section>
         <section className="mx-auto grid grid-cols-1 place-items-start gap-4 md:grid-cols-2">

@@ -71,8 +71,8 @@ export const WorkCard = memo<WorkCardProps>(
             </Button>
           </CardFooter>
         </Card>
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-          <ModalContent>
+        <Modal placement={"center"} isOpen={isOpen} onOpenChange={onOpenChange}>
+          <ModalContent className="mx-4">
             {(onClose) => (
               <>
                 <ModalHeader>{title}</ModalHeader>
@@ -90,5 +90,5 @@ export const WorkCard = memo<WorkCardProps>(
         </Modal>
       </>
     );
-  },
+  }
 );

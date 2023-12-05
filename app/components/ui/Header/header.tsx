@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useReducer } from "react";
 
 import { Icon } from "@iconify/react/dist/iconify.js";
 import {
@@ -17,14 +17,15 @@ import { ThemeToggleButton } from "./theme-toggle-button";
 import { ThemeProvider } from "~/components/provider/theme-provider";
 
 export const Header = memo(() => {
-  const [isMenuOepn, setIsMenuOpen] = useState(false);
-
+  const [isMenuOepn, setIsMenuOpen] = useReducer((state) => !state, false);
   return (
     <Navbar
       position="sticky"
       maxWidth="xl"
+      isMenuOpen={isMenuOepn}
       onMenuOpenChange={setIsMenuOpen}
       isBordered
+      disableAnimation
     >
       <NavbarBrand className="w-full">
         <h1 className="text-large md:text-3xl">Bayathy Blog</h1>
@@ -63,7 +64,7 @@ export const Header = memo(() => {
           />
         </NavbarItem>
       </NavbarContent>
-      <MobileMenu />
+      <MobileMenu setIsMenuOpen={setIsMenuOpen} />
     </Navbar>
   );
 });
