@@ -1,13 +1,12 @@
 import { Suspense } from "react";
 
-import { createDirectus, rest, readItems } from "@directus/sdk";
-import { Spinner } from "@nextui-org/react";
+import { createDirectus, readItem, rest } from "@directus/sdk";
 import { defer, type MetaFunction } from "@remix-run/node";
 import { Await, useLoaderData } from "@remix-run/react";
 
 import type { Post } from "~/types/post";
 
-import { PostCard } from "~/components/ui/PostCard";
+import { MiddleSpinner } from "~/components/ui/MiddleSpinner";
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,31 +15,26 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function loader() {
+export async function loader({ params }: { params: { id: string } }) {
   const client = createDirectus(process.env.CMS_URL as string).with(rest());
 
-  const data = client.request(readItems("posts")) as Promise<Post[]>;
+  const data = (await client.request(
+    readItem("posts", params.id),
+  )) as Promise<Post>;
 
   return defer({ data });
 }
 
-export default function Blog() {
+export default function Post() {
   const { data } = useLoaderData<typeof loader>();
   return (
     <main className="mx-auto mt-4 w-full max-w-6xl px-6">
-      <h1 className="text-2xl">Blog Post</h1>
-      <Suspense fallback={<Spinner size="lg" />}>
+      <Suspense fallback={<MiddleSpinner />}>
         <Await resolve={data}>
           {(data) => (
             <div className="mt-4">
-              {data.map((post) => (
-                <PostCard
-                  key={post.id}
-                  title={post.title}
-                  date={post.date_updated}
-                  id={post.id}
-                />
-              ))}
+              <h1 className="text-2xl">{data.title}</h1>
+              <p>{data.contents}</p>
             </div>
           )}
         </Await>

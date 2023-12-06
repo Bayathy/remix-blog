@@ -90,5 +90,5 @@ export const WorkCard = memo<WorkCardProps>(
         </Modal>
       </>
     );
-  }
+  },
 );
