@@ -1,12 +1,11 @@
-import { Suspense } from "react";
-
 import { createDirectus, readItem, rest } from "@directus/sdk";
-import { defer, type MetaFunction } from "@remix-run/node";
-import { Await, useLoaderData } from "@remix-run/react";
+import { json, type MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import Markdown from "react-markdown";
 
 import type { Post } from "~/types/post";
 
-import { MiddleSpinner } from "~/components/ui/MiddleSpinner";
+import { formatDate } from "~/utils/format-date";
 
 export const meta: MetaFunction = () => {
   return [
@@ -18,27 +17,22 @@ export const meta: MetaFunction = () => {
 export async function loader({ params }: { params: { id: string } }) {
   const client = createDirectus(process.env.CMS_URL as string).with(rest());
 
-  const data = (await client.request(
-    readItem("posts", params.id),
-  )) as Promise<Post>;
+  const data = await client.request(readItem("posts", params.id));
 
-  return defer({ data });
+  return json({ data });
 }
 
 export default function Post() {
   const { data } = useLoaderData<typeof loader>();
   return (
     <main className="mx-auto mt-4 w-full max-w-6xl px-6">
-      <Suspense fallback={<MiddleSpinner />}>
-        <Await resolve={data}>
-          {(data) => (
-            <div className="mt-4">
-              <h1 className="text-2xl">{data.title}</h1>
-              <p>{data.contents}</p>
-            </div>
-          )}
-        </Await>
-      </Suspense>
+      <article className="mt-4">
+        <h2 className="text-3xl font-medium tracking-tighter">{data.title}</h2>
+        <p className="mt-2">{formatDate(data.date_updated)}</p>
+        <section className="prose prose-neutral prose-quoteless dark:prose-invert">
+          <Markdown>{data.contents}</Markdown>
+        </section>
+      </article>
     </main>
   );
 }

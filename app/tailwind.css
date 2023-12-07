@@ -8,3 +8,31 @@
   box-sizing: border-box;
   font-family: "Noto Sans JP", sans-serif;
 }
+
+.prose pre {
+  min-width: 90vw;
+  @apply rounded-lg border;
+}
+
+.prose h2,
+h3,
+h4 {
+  @apply font-medium tracking-tighter !important;
+}
+
+.prose strong {
+  @apply font-medium;
+}
+
+.prose img {
+  @apply m-0;
+}
+
+.prose a {
+  @apply text-primary-500 underline;
+}
+
+.prose a:hover {
+  @apply text-primary-600;
+}
+

@@ -1,10 +1,7 @@
-import { Suspense } from "react";
-
 import { createDirectus, readItems, rest } from "@directus/sdk";
-import { defer, type MetaFunction } from "@remix-run/node";
-import { Await, useLoaderData } from "@remix-run/react";
+import { json, type MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 
-import { MiddleSpinner } from "~/components/ui/MiddleSpinner";
 import { WorkCard } from "~/components/ui/WorkCard";
 
 export const meta: MetaFunction = () => {
@@ -16,17 +13,17 @@ export const meta: MetaFunction = () => {
 
 export async function loader() {
   const client = createDirectus(process.env.CMS_URL as string).with(rest());
-  const data = client.request(readItems("works")).then((res) =>
-    res.map((work) => ({
-      id: work.id,
-      title: work.title,
-      description: work.description,
-      github_url: work.github_url,
-      image: `${process.env.SUPABASE_URL + work.image}.png`,
-    })),
-  ) as Promise<Record<string, string>[]>;
+  const res = await client.request(readItems("works"));
 
-  return defer({ data });
+  const data = res.map((work) => ({
+    id: work.id,
+    title: work.title,
+    description: work.description,
+    image: `${process.env.SUPABASE_URL + work.image}.png`,
+    github_url: work.github_url,
+  }));
+
+  return json({ data });
 }
 
 export default function Works() {
@@ -34,23 +31,17 @@ export default function Works() {
   return (
     <main className="mx-auto mt-4 w-full max-w-6xl px-6">
       <h1 className="text-2xl">Works</h1>
-      <Suspense fallback={<MiddleSpinner />}>
-        <div className="mt-4 grid place-content-center gap-4 md:grid-cols-2">
-          <Await resolve={data}>
-            {(data) =>
-              data.map((work) => (
-                <WorkCard
-                  key={work.id}
-                  title={work.title}
-                  description={work.description}
-                  image={work.image}
-                  github_url={work.github_url}
-                />
-              ))
-            }
-          </Await>
-        </div>
-      </Suspense>
+      <div className="mt-4 grid place-content-center gap-4 md:grid-cols-2">
+        {data.map((work) => (
+          <WorkCard
+            key={work.id}
+            title={work.title}
+            description={work.description}
+            image={work.image}
+            github_url={work.github_url}
+          />
+        ))}
+      </div>
     </main>
   );
 }

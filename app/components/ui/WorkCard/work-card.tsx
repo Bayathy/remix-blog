@@ -56,13 +56,7 @@ export const WorkCard = memo<WorkCardProps>(
                 <Icon icon={"mdi:github"} width={32} height={32} />
               </Button>
             ) : (
-              <Button
-                isIconOnly
-                as={Link}
-                color="primary"
-                variant="light"
-                disabled
-              >
+              <Button isIconOnly variant="light" disabled isDisabled>
                 <Icon icon={"mdi:github"} width={32} height={32} />
               </Button>
             )}
@@ -90,5 +84,5 @@ export const WorkCard = memo<WorkCardProps>(
         </Modal>
       </>
     );
-  },
+  }
 );

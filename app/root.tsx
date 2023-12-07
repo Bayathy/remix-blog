@@ -29,7 +29,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body suppressHydrationWarning>
+      <body>
         <NextUIProvider navigate={navigate}>
           <div className="grid min-h-screen w-screen grid-cols-[1fr] grid-rows-[auto_1fr_auto] overflow-hidden">
             <Header />
