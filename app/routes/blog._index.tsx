@@ -1,5 +1,4 @@
 import { createDirectus, rest, readItems } from "@directus/sdk";
-import { Card } from "@nextui-org/react";
 import { json, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
@@ -24,9 +23,7 @@ export default function Blog() {
   const { data } = useLoaderData<typeof loader>();
   return (
     <main className="mx-auto mt-4 w-full max-w-6xl px-6">
-      <Card>
-        <h1 className="text-2xl">Blog Post</h1>
-      </Card>
+      <h1 className="text-2xl">Blog Post</h1>
       <div className="mt-4">
         {data.map((post) => (
           <PostCard

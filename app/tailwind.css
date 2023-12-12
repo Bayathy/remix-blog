@@ -1,38 +1,49 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
   box-sizing: border-box;
-  font-family: "Noto Sans JP", sans-serif;
 }
 
 .prose pre {
-  min-width: 90vw;
-  @apply rounded-lg border;
+  @apply rounded-lg;
+  background-color: #282c34;
+  overflow-x: auto;
 }
 
-.prose h2,
-h3,
-h4 {
-  @apply font-medium tracking-tighter !important;
+:root {
+  --sh-class: rgb(97, 175, 239);
+  --sh-identifier: rgb(228, 191, 122);
+  --sh-sign: rgb(255, 255, 255);
+  --sh-string: rgb(150, 193, 120);
+  --sh-keyword: #ff9d00;
+  --sh-comment: #6a737d;
+  --sh-jsxliterals: #372f22;
 }
 
-.prose strong {
-  @apply font-medium;
+.prose pre {
+  @apply rounded-lg overflow-x-auto w-full max-w-full;
 }
 
-.prose img {
-  @apply m-0;
+.prose code {
+  @apply px-1 py-0.5 rounded-lg;
 }
 
-.prose a {
-  @apply text-primary-500 underline;
+.prose pre code {
+  @apply p-0;
+  border: initial;
+  line-height: 1.5;
 }
 
-.prose a:hover {
-  @apply text-primary-600;
+pre code {
+  counter-reset: sh-line-number;
 }
 
+.sh__line::before {
+  counter-increment: sh-line-number 1;
+  content: counter(sh-line-number);
+  margin-right: 24px;
+  text-align: right;
+  color: #a4a4a4;
+}

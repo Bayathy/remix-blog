@@ -2,7 +2,8 @@ import { memo } from "react";
 
 import { Card, CardHeader, CardBody } from "@nextui-org/react";
 import { useNavigate } from "@remix-run/react";
-import { format } from "date-fns";
+
+import { formatDate } from "~/utils/format-date";
 
 type PostCardProps = {
   id: string;
@@ -22,7 +23,7 @@ export const PostCard = memo<PostCardProps>(({ id, title, date }) => {
     >
       <CardHeader className="flex-col items-start px-4 pb-0 pt-2">
         <h3 className="text-large font-bold">{title}</h3>
-        <small>{format(new Date(date), "yyyy-MM-dd")}</small>
+        <small>{formatDate(date)}</small>
       </CardHeader>
       <CardBody className="overflow-visible py-2"></CardBody>
     </Card>
