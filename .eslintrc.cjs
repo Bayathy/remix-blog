@@ -5,4 +5,7 @@ module.exports = {
     "@bayathy/eslint-config-react",
     "@bayathy/eslint-config-tailwindcss",
   ],
+  rules: {
+    "unicorn/filename-case": "off",
+  },
 };
