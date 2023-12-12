@@ -35,7 +35,7 @@ const createHeading = (level: number) => {
       { id: slug },
       <a href={`#${slugify(children as string)}`} className="no-underline">
         {children}
-      </a>,
+      </a>
     );
   };
 };
@@ -45,8 +45,13 @@ export default function Post() {
   return (
     <main className="mx-auto mt-4 w-full max-w-sm px-2 md:max-w-6xl">
       <article className="mt-4">
-        <h2 className="text-3xl font-medium tracking-tighter">{data.title}</h2>
-        <p className="mt-2">{formatDate(data.date_updated)}</p>
+        <div className="border-b-2 pb-3">
+          <h2 className="text-3xl font-medium tracking-tighter">
+            {data.title}
+          </h2>
+          <p className="mt-2">{formatDate(data.date_updated)}</p>
+          <span>{data.emoji}</span>
+        </div>
         <section className="prose mt-8 max-w-full dark:prose-invert">
           <Markdown
             components={{

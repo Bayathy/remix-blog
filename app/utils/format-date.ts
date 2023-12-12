@@ -15,7 +15,7 @@ export function formatDate(date: string) {
   } else if (daysAgo > 0) {
     formattedDate = `${daysAgo}日前`;
   } else {
-    formattedDate = "Today";
+    formattedDate = "今日";
   }
 
   const fullDate = targetDate.toLocaleString("jp", {
