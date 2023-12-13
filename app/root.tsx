@@ -1,4 +1,5 @@
-import { NextUIProvider } from "@nextui-org/react";
+import type { LinksFunction } from "@remix-run/cloudflare";
+import { cssBundleHref } from "@remix-run/css-bundle";
 import {
   Links,
   LiveReload,
@@ -6,23 +7,15 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useNavigate,
 } from "@remix-run/react";
 
-import { Footer } from "./components/ui/Footer/footer";
-import { Header } from "./components/ui/Header/header";
-import stylesheet from "./tailwind.css";
-
-import type { LinksFunction } from "@remix-run/node";
-
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesheet },
+  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
 export default function App() {
-  const navigate = useNavigate();
   return (
-    <html lang="ja" suppressHydrationWarning>
+    <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,16 +23,10 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <NextUIProvider navigate={navigate}>
-          <div className="grid min-h-screen w-screen grid-cols-[1fr] grid-rows-[auto_1fr_auto] overflow-hidden">
-            <Header />
-            <Outlet />
-            <Footer />
-          </div>
-          <ScrollRestoration />
-          <Scripts />
-          <LiveReload />
-        </NextUIProvider>
+        <Outlet />
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
       </body>
     </html>
   );

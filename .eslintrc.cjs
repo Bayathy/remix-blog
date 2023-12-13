@@ -1,11 +1,4 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
-  extends: [
-    "@bayathy/eslint-config",
-    "@bayathy/eslint-config-react",
-    "@bayathy/eslint-config-tailwindcss",
-  ],
-  rules: {
-    "unicorn/filename-case": "off",
-  },
+  extends: ["@remix-run/eslint-config", "@remix-run/eslint-config/node"],
 };
