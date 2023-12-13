@@ -8,7 +8,10 @@
     "dev": "remix dev --manual -c \"npm run start\"",
     "start": "wrangler pages dev --compatibility-date=2023-06-21 ./public",
     "typecheck": "tsc",
-    "pages:deploy": "npm run build && wrangler pages deploy ./public"
+    "pages:deploy": "npm run build && wrangler pages deploy ./public",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx app",
+    "format": "prettier --write 'app/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx app && bun run format"
   },
   "dependencies": {
     "@remix-run/cloudflare": "^2.3.1",
@@ -17,17 +20,31 @@
     "@remix-run/react": "^2.3.1",
     "isbot": "^3.6.8",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "@directus/sdk": "^13.0.2",
+    "@nextui-org/react": "^2.2.9",
+    "date-fns": "^2.30.0",
+    "framer-motion": "^10.16.4",
+    "next-themes": "^0.2.1",
+    "react-markdown": "^9.0.1",
+    "sugar-high": "^0.5.6"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230518.0",
     "@remix-run/dev": "^2.3.1",
-    "@remix-run/eslint-config": "^2.3.1",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "eslint": "^8.38.0",
     "typescript": "^5.1.0",
-    "wrangler": "^3.8.0"
+    "@iconify/react": "^4.1.1",
+    "tailwindcss": "^3.3.3",
+    "autoprefixer": "latest",
+    "@tailwindcss/typography": "^0.5.10",
+    "wrangler": "^3.8.0",
+    "@bayathy/eslint-config": "^1.8.0",
+    "@bayathy/eslint-config-react": "^1.4.0",
+    "@bayathy/eslint-config-tailwindcss": "^1.4.0",
+    "prettier": "^3.0.3"
   },
   "engines": {
     "node": ">=18.0.0"
