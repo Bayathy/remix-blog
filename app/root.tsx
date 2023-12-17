@@ -10,6 +10,8 @@ import {
   useNavigate,
 } from "@remix-run/react";
 
+import { Footer } from "./components/ui/Footer";
+import { Header } from "./components/ui/Header";
 import stylesheet from "./globals.css";
 
 import type { LinksFunction } from "@remix-run/cloudflare";
