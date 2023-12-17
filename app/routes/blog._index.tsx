@@ -1,6 +1,9 @@
 import { createDirectus, rest, readItems } from "@directus/sdk";
-import { json, type MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
+
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
+import type { Env } from "~/env";
 
 import { PostCard } from "~/components/ui/PostCard";
 
@@ -11,13 +14,14 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function loader() {
-  const client = createDirectus(process.env.CMS_URL as string).with(rest());
+export const loader = async ({ context }: LoaderFunctionArgs) => {
+  const env = context.env as Env;
+  const client = createDirectus(env.CMS_URL as string).with(rest());
 
   const data = await client.request(readItems("posts"));
 
   return json({ data });
-}
+};
 
 export default function Blog() {
   const { data } = useLoaderData<typeof loader>();

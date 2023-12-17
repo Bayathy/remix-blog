@@ -1,4 +1,5 @@
 import { NextUIProvider } from "@nextui-org/react";
+import { cssBundleHref } from "@remix-run/css-bundle";
 import {
   Links,
   LiveReload,
@@ -9,14 +10,15 @@ import {
   useNavigate,
 } from "@remix-run/react";
 
-import { Footer } from "./components/ui/Footer/footer";
-import { Header } from "./components/ui/Header/header";
-import stylesheet from "./tailwind.css";
+import { Footer } from "./components/ui/Footer";
+import { Header } from "./components/ui/Header";
+import stylesheet from "./globals.css";
 
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction } from "@remix-run/cloudflare";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
+  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
 export default function App() {

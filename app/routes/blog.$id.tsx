@@ -1,13 +1,15 @@
-import { createElement, type ReactNode } from "react";
+import type { ReactNode } from "react";
+import { createElement } from "react";
 
-import { createDirectus, readItem, rest } from "@directus/sdk";
+import { createDirectus, rest, readItem } from "@directus/sdk";
 import { Link } from "@nextui-org/react";
-import { json, type MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import Markdown from "react-markdown";
 import { highlight } from "sugar-high";
 
-import type { Post } from "~/types/post";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
+import type { Env } from "~/env";
 
 import { slugify } from "~/components/ui/MdArticle/md-article";
 import { formatDate } from "~/utils/format-date";
@@ -19,13 +21,15 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function loader({ params }: { params: { id: string } }) {
-  const client = createDirectus(process.env.CMS_URL as string).with(rest());
+export const loader = async ({ params, context }: LoaderFunctionArgs) => {
+  const env = context.env as Env;
 
-  const data = await client.request(readItem("posts", params.id));
+  const client = createDirectus(env.CMS_URL as string).with(rest());
+
+  const data = await client.request(readItem("posts", params.id!));
 
   return json({ data });
-}
+};
 
 const createHeading = (level: number) => {
   return function Heading({ children }: { children: ReactNode }) {
@@ -35,7 +39,7 @@ const createHeading = (level: number) => {
       { id: slug },
       <a href={`#${slugify(children as string)}`} className="no-underline">
         {children}
-      </a>
+      </a>,
     );
   };
 };

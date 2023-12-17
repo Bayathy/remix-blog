@@ -1,7 +1,10 @@
-import { createDirectus, readItem, readItems, rest } from "@directus/sdk";
+import { createDirectus, rest, readItems, readItem } from "@directus/sdk";
 import { Image } from "@nextui-org/react";
-import { defer, type MetaFunction } from "@remix-run/node";
+import { defer } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
+
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
+import type { Env } from "~/env";
 
 import { SkillCard } from "~/components/ui/SkillCard";
 
@@ -12,19 +15,20 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function loader() {
-  const client = createDirectus(process.env.CMS_URL as string).with(rest());
+export const loader = async ({ context }: LoaderFunctionArgs) => {
+  const env = context.env as Env;
+  const client = createDirectus(env.CMS_URL as string).with(rest());
 
   const skills = await client.request(readItems("skills"));
   const aboutMeRes = await client.request(readItem("aboutMe", 1));
 
   const aboutMe = {
     text: aboutMeRes.text,
-    icon: `${process.env.SUPABASE_URL + aboutMeRes.icon}.png`,
+    icon: `${env.SUPABASE_URL + aboutMeRes.icon}.png`,
   };
 
   return defer({ aboutMe, skills });
-}
+};
 export default function Index() {
   const { skills, aboutMe } = useLoaderData<typeof loader>();
 
