@@ -18,6 +18,16 @@ import type { LinksFunction } from "@remix-run/cloudflare";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
+  {
+    rel: "icon",
+    sizes: "32x32",
+    href: "/favicon_32x32.ico",
+  },
+  {
+    rel: "icon",
+    sizes: "128x128",
+    href: "/favicon_128x128.ico",
+  },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 

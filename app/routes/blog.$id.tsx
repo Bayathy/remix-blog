@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
-import { createElement } from "react";
+import { Suspense, createElement } from "react";
 
 import { createDirectus, rest, readItem } from "@directus/sdk";
 import { Link } from "@nextui-org/react";
-import { json } from "@remix-run/cloudflare";
-import { useLoaderData } from "@remix-run/react";
+import { defer } from "@remix-run/cloudflare";
+import { Await, useLoaderData } from "@remix-run/react";
 import Markdown from "react-markdown";
 import { highlight } from "sugar-high";
 
@@ -21,14 +21,14 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = async ({ params, context }: LoaderFunctionArgs) => {
+export const loader = ({ params, context }: LoaderFunctionArgs) => {
   const env = context.env as Env;
 
   const client = createDirectus(env.CMS_URL as string).with(rest());
 
-  const data = await client.request(readItem("posts", params.id!));
+  const data = client.request(readItem("posts", params.id!));
 
-  return json({ data });
+  return defer({ data });
 };
 
 const createHeading = (level: number) => {
@@ -39,7 +39,7 @@ const createHeading = (level: number) => {
       { id: slug },
       <a href={`#${slugify(children as string)}`} className="no-underline">
         {children}
-      </a>,
+      </a>
     );
   };
 };
@@ -48,34 +48,44 @@ export default function Post() {
   const { data } = useLoaderData<typeof loader>();
   return (
     <main className="mx-auto mt-4 w-full max-w-sm px-2 md:max-w-6xl">
-      <article className="mt-4">
-        <div className="border-b-2 pb-3">
-          <h2 className="text-3xl font-medium tracking-tighter">
-            {data.title}
-          </h2>
-          <p className="mt-2">{formatDate(data.date_updated)}</p>
-          <span>{data.emoji}</span>
-        </div>
-        <section className="prose mt-8 max-w-full dark:prose-invert">
-          <Markdown
-            components={{
-              a: ({ href, children }) => <Link href={href}>{children}</Link>,
-              h1: ({ children }) => createHeading(1)({ children }),
-              h2: ({ children }) => createHeading(2)({ children }),
-              h3: ({ children }) => createHeading(3)({ children }),
-              h4: ({ children }) => createHeading(4)({ children }),
-              h5: ({ children }) => createHeading(5)({ children }),
-              h6: ({ children }) => createHeading(6)({ children }),
-              code: ({ children }) => {
-                const codeHtml = highlight(children as string);
-                return <code dangerouslySetInnerHTML={{ __html: codeHtml }} />;
-              },
-            }}
-          >
-            {data.contents}
-          </Markdown>
-        </section>
-      </article>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Await resolve={data}>
+          {(data) => (
+            <article className="mt-4">
+              <div className="border-b-2 pb-3">
+                <h2 className="text-3xl font-medium tracking-tighter">
+                  {data.title}
+                </h2>
+                <p className="mt-2">{formatDate(data.date_updated)}</p>
+                <span>{data.emoji}</span>
+              </div>
+              <section className="prose mt-8 max-w-full dark:prose-invert">
+                <Markdown
+                  components={{
+                    a: ({ href, children }) => (
+                      <Link href={href}>{children}</Link>
+                    ),
+                    h1: ({ children }) => createHeading(1)({ children }),
+                    h2: ({ children }) => createHeading(2)({ children }),
+                    h3: ({ children }) => createHeading(3)({ children }),
+                    h4: ({ children }) => createHeading(4)({ children }),
+                    h5: ({ children }) => createHeading(5)({ children }),
+                    h6: ({ children }) => createHeading(6)({ children }),
+                    code: ({ children }) => {
+                      const codeHtml = highlight(children as string);
+                      return (
+                        <code dangerouslySetInnerHTML={{ __html: codeHtml }} />
+                      );
+                    },
+                  }}
+                >
+                  {data.contents}
+                </Markdown>
+              </section>
+            </article>
+          )}
+        </Await>
+      </Suspense>
     </main>
   );
 }
