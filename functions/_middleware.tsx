@@ -1,12 +1,12 @@
 import vercelOGPagesPlugin from "@cloudflare/pages-plugin-vercel-og";
 
-type Props = {
-  title: string;
-};
+interface Props {
+  ogTitle: string;
+}
 
 export const onRequest = vercelOGPagesPlugin<Props>({
-  imagePathSuffix: "/og-image.png",
-  component: ({ title }) => {
+  imagePathSuffix: "/social-image.png",
+  component: ({ ogTitle }) => {
     return (
       <div
         style={{
@@ -23,11 +23,11 @@ export const onRequest = vercelOGPagesPlugin<Props>({
             fontSize: "64px",
           }}
         >
-          {title}
+          {ogTitle}
         </span>
         <img
-          src={"/ogp.png"}
-          alt="icon"
+          alt="Bayathy"
+          src={"https://avatars.githubusercontent.com/u/68783260?v=4"}
           width={64}
           height={64}
           style={{
@@ -46,7 +46,7 @@ export const onRequest = vercelOGPagesPlugin<Props>({
     on: {
       'meta[property="og:title"]': (props) => ({
         element(element) {
-          props.title = element.getAttribute("content") || "Bayathy";
+          props.ogTitle = element.getAttribute("content") || "Bayathy";
         },
       }),
     },
