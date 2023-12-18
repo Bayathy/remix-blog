@@ -12,6 +12,7 @@ export const meta: MetaFunction = () => {
   return [
     { title: "Bayathy | Home" },
     { name: "description", content: "BayathyのPortfolioです。" },
+    { name: "og:title", content: "Bayathy"}
   ];
 };
 

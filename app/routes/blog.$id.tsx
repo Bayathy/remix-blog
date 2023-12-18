@@ -14,21 +14,23 @@ import type { Env } from "~/env";
 import { slugify } from "~/components/ui/MdArticle/md-article";
 import { formatDate } from "~/utils/format-date";
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({ data }) => {
+  const metadata = (data as { metadata: { title: string } }).metadata;
   return [
-    { title: "Bayathy | Blog" },
+    { title: `Bayathy | ${metadata.title || "Blog"}` },
     { name: "description", content: "BayathyのBlogです。" },
+    { name: "og:title", content: metadata.title },
   ];
 };
 
-export const loader = ({ params, context }: LoaderFunctionArgs) => {
+export const loader = async ({ params, context }: LoaderFunctionArgs) => {
   const env = context.env as Env;
-
   const client = createDirectus(env.CMS_URL as string).with(rest());
 
+  const metadata = await client.request(readItem("posts", params.id!));
   const data = client.request(readItem("posts", params.id!));
 
-  return defer({ data });
+  return defer({ data, metadata });
 };
 
 const createHeading = (level: number) => {

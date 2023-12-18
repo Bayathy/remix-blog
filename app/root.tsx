@@ -21,12 +21,17 @@ export const links: LinksFunction = () => [
   {
     rel: "icon",
     sizes: "32x32",
-    href: "/favicon_32x32.ico",
+    href: "/favicon_32.ico",
+  },
+  {
+    rel: "icon",
+    sizes: "64x64",
+    href: "/favicon_64.ico",
   },
   {
     rel: "icon",
     sizes: "128x128",
-    href: "/favicon_128x128.ico",
+    href: "/favicon_128.ico",
   },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
