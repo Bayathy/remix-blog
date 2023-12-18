@@ -7,11 +7,13 @@ import type { Env } from "~/env";
 
 import { WorkCard } from "~/components/ui/WorkCard";
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({ data }) => {
+  const ogURL = (data as { ogURL: string }).ogURL;
   return [
     { title: "Bayathy | Works" },
     { name: "description", content: "Bayathyの制作物です。" },
-    { name: "og:title", content: "Bayathy" },
+    { name: "og:title", content: "Bayathy | Works" },
+    { name: "og:image", content: ogURL },
   ];
 };
 
@@ -20,6 +22,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 
   const client = createDirectus(env.CMS_URL as string).with(rest());
   const res = await client.request(readItems("works"));
+  const ogURL = env.OG_URL as string;
 
   const data = res.map((work) => ({
     id: work.id,
@@ -29,7 +32,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
     github_url: work.github_url,
   }));
 
-  return json({ data });
+  return json({ data, ogURL });
 };
 
 export default function Works() {

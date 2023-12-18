@@ -14,7 +14,6 @@
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx app && bun run format"
   },
   "dependencies": {
-    "@cloudflare/pages-plugin-vercel-og": "^0.1.0",
     "@directus/sdk": "^13.0.2",
     "@nextui-org/react": "^2.2.9",
     "@remix-run/cloudflare": "^2.3.1",
