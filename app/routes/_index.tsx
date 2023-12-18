@@ -8,10 +8,13 @@ import type { Env } from "~/env";
 
 import { SkillCard } from "~/components/ui/SkillCard";
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({data}) => {
+  const ogURL = (data as { ogURL: string }).ogURL;
   return [
     { title: "Bayathy | Home" },
     { name: "description", content: "BayathyのPortfolioです。" },
+    { name: "og:title", content: "Bayathy | Home" },
+    { name: "og:image", content: ogURL},
   ];
 };
 
@@ -21,13 +24,14 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 
   const skills = await client.request(readItems("skills"));
   const aboutMeRes = await client.request(readItem("aboutMe", 1));
+  const ogURL = env.OG_URL as string;
 
   const aboutMe = {
     text: aboutMeRes.text,
     icon: `${env.SUPABASE_URL + aboutMeRes.icon}.png`,
   };
 
-  return defer({ aboutMe, skills });
+  return defer({ aboutMe, skills , ogURL});
 };
 export default function Index() {
   const { skills, aboutMe } = useLoaderData<typeof loader>();
